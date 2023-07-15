@@ -1,0 +1,659 @@
+/* YEK/SASS (https://github.com/yek-org/yek-sass) */
+
+@include clear-root;
+
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+
+@include set-root(
+  (
+    color-primary: #ff9801,
+    color-link-active: hsl(36, 80%, 70%, 80%),
+    color-secondary: #d9e4ff,
+    color-gray: #808489,
+    color-black: #343636,
+    color-white: #f6f9ff,
+    color-background: #ecf3ff,
+    color-bg: #d9e4ff
+  )
+);
+.visual-hidden {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+}
+
+body {
+  background: color(bg);
+  @include center;
+  overflow: hidden;
+  // font-family: "Inria Sans";
+}
+
+/* responsive - error */
+
+#error-responsive {
+  @include fixed(50%, 50%);
+  @include size(80vw, 80vh);
+  @include radius(25);
+  background: color(gray);
+  color: color(white);
+  z-index: 99;
+  transform: translate(-50%, -50%);
+  @include center;
+  padding: 15px;
+
+  span.ops {
+    display: block;
+    width: 50%;
+    font-size: 3rem;
+    margin: auto 25px;
+    margin-top: 50px;
+  }
+
+  span {
+    color: color(primary);
+  }
+
+  div {
+    font-size: 32px;
+  }
+
+  display: none;
+}
+
+/* header */
+.app {
+  @include set-var(logo-width, 150px);
+  @include set-var(search-width, 60px);
+  @include set-var(header-heigth, 80px);
+
+  @include size(1280px, 800px);
+  @include radius(35);
+  background: color(background);
+  overflow: hidden;
+}
+
+.app {
+  &__header {
+    @include flex;
+    @include size(100%, val(header-height));
+    padding: 45px;
+  }
+
+  &__logo {
+    display: inline-block;
+    @include center;
+    font-size: 1.5rem;
+    width: val(logo-width);
+    height: val(header-height);
+    text-decoration: none;
+
+    &_text {
+      display: inline-block;
+      @include clear-space;
+    }
+    &_text:nth-child(1) {
+      color: color(black);
+      font-weight: 900;
+    }
+    &_text:nth-child(2) {
+      color: color(primary);
+      font-weight: 600;
+    }
+  }
+}
+
+.app {
+  &__nav {
+    display: inline-block;
+    @include center;
+    width: calc(100% - (150px + 60px + 40px));
+    padding: 0 125px;
+
+    &_list {
+      width: 600px;
+      @include size;
+      @include flex;
+      @include clear-list;
+      @include align(space-between, center, center);
+      padding: 15px 35px;
+      overflow: hidden;
+    }
+
+    &_item {
+      @include size(20%, 100%);
+      @include center;
+      text-align: center;
+    }
+
+    &_link {
+      @include relative;
+      @include size($tog: 100%);
+      text-decoration: none;
+      color: color(black);
+      font-size: 1.3rem;
+      font-weight: 400;
+
+      &,
+      &::before,
+      &::after {
+        transition: 0.3s ease;
+      }
+
+      &::before,
+      &::after {
+        z-index: 2;
+        content: "";
+        display: inline-block;
+        @include size(110px, 45px);
+        @include absolute(-11px, 8px);
+        border-radius: 100%;
+        border: 3px solid transparent;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 5px color(link-hover);
+      }
+    }
+
+    &_item:hover &_link {
+      &::before,
+      &::after {
+        border-color: color(link-active);
+      }
+    }
+
+    &_link--active {
+      color: color(primary);
+      font-weight: 900;
+      z-index: 3;
+
+      &::before,
+      &::after {
+        border-color: color(link-active);
+      }
+      &::before {
+        transform: rotate(7deg);
+      }
+      &::after {
+        transform: rotate(353deg);
+      }
+    }
+  }
+}
+
+.app {
+  &__search {
+    @include size($tog: 60px);
+    overflow: hidden;
+
+    &_btn {
+      @include clear-button;
+      @include size($tog: 55px);
+      @include center;
+      @include radius(90);
+      color: color(primary);
+      border: 2px solid currentcolor;
+
+      &:hover i {
+        transform: rotate(45deg);
+      }
+
+      i {
+        font-weight: 700;
+        font-size: 1.4rem;
+      }
+    }
+  }
+}
+
+.app {
+  &__signin {
+    // FIXME : if fixed sizing then remove below line
+    display: none !important;
+
+    @include clear-button;
+    @include size(150px, 55px);
+    @include flex;
+    @include radius(90);
+    color: color(primary);
+    border: 2px solid currentcolor;
+    @include align(flex-start, center, center);
+    margin-left: 15px;
+
+    i {
+      @include center;
+      @include radius(90);
+      @include size($tog: 45px);
+      text-align: center;
+      background: color(primary);
+      color: color(white);
+    }
+
+    span {
+      margin-left: 15px;
+    }
+  }
+}
+
+/* hero */
+.app {
+  &__hero {
+    display: grid;
+    grid-template-rows: 50px 245px 145px 145px;
+    grid-template-columns: 50px 1fr 50px 2fr;
+    height: calc(100% - var(--header-height));
+    width: 100%;
+    padding: 15px 50px;
+  }
+
+  &__heading {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  &__cta {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  &__more {
+    grid-column: 2;
+    grid-row: 4;
+  }
+  &__cover {
+    grid-column: 4;
+    grid-row: 1/4;
+  }
+}
+
+.app {
+  &__title {
+    font-size: 60px;
+    @include clear-space;
+
+    span {
+      color: color(primary);
+    }
+  }
+}
+
+.app {
+  &__cover {
+    @include relative;
+    overflow: hidden;
+    top: -50px;
+    @include clear-space;
+    padding: 15px;
+
+    width: 100%;
+    height: 155%;
+
+    &_img {
+      @include absolute($left: 115px, $bottom: 145px);
+      @include image-fit-cover;
+      @include size(530px, 480px);
+      @include radius(30);
+      z-index: 2;
+      cursor: zoom-in;
+    }
+
+    &_shape {
+      position: relative;
+      display: inline-block;
+      width: 330px;
+      height: 90%;
+      top: 0;
+      left: 330px;
+      z-index: 1;
+
+      &,
+      &::before {
+        background: color(bg);
+        @include radius(25);
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 70%;
+        height: 100%;
+        top: 0;
+        left: -115px;
+        transform: translateX(10px) skewX(351deg);
+      }
+    }
+
+    figcaption {
+      @include absolute($left: 325px, $bottom: 105px);
+      font-size: 21px;
+      z-index: 3;
+      @include clear-space;
+      color: color(gray);
+    }
+  }
+}
+
+.app {
+  &__cta {
+    @include clear-space;
+    @include clear-input;
+    @include flex;
+    @include size(100%, 65px);
+    background: white;
+    @include radius();
+  }
+
+  &__find {
+    @include clear-input(false, $effect: false);
+    background: transparent;
+    @include size(calc(100% - 157px), 100%);
+    padding-left: 3ch;
+    padding-right: 2ch;
+  }
+
+  &__cta_btn {
+    @include clear-button($effect: true);
+    @include size(150px, 55px);
+    margin: auto 0;
+    margin-right: 5px;
+    @include radius();
+    background: color(primary);
+    &:focus {
+      box-shadow: 0 0 0 5px color(link-active);
+    }
+  }
+}
+
+.app {
+  &__more {
+    @include flex;
+    @include size(100%, 125px);
+    overflow: hidden;
+  }
+
+  &__description--sub {
+    @include size(100%, 16px);
+    display: inline-block;
+    font-size: 16px;
+    @include clear-space;
+  }
+
+  &__icons {
+    @include clear-list;
+    @include size(100%, 70px);
+    @include flex;
+    @include aligns(space-between);
+    @include clear-space;
+    margin-left: -20px;
+  }
+
+  &__icon_item {
+    @include size(25%, 100%);
+    @include clear-space;
+    cursor: default;
+  }
+
+  &__icon {
+    @include flex;
+    @include align(center, center, stretch);
+    @include size($tog: 100%);
+    @include clear-space;
+
+    figcaption {
+      @include size(100%);
+      text-align: center;
+      @include clear-space;
+    }
+  }
+
+  &__icon_img {
+    @include size($tog: 35px);
+  }
+}
+
+@media screen and (min-width: 265px) and (max-width: 1280px) {
+  .app {
+    @include size(960px, 540px);
+
+    &__header {
+      padding: 21px;
+    }
+
+    &__logo {
+      font-size: 1.4rem;
+    }
+
+    &__search {
+      @include size($tog: 45px);
+    }
+
+    &__search_btn {
+      @include size($tog: 40px);
+
+      i {
+        font-size: 0.9rem;
+      }
+    }
+
+    &__hero {
+      grid-template-rows: 35px 190px 85px 100px;
+      grid-template-columns: 40px 1fr 50px 2fr;
+      padding: 5px 35px;
+    }
+
+    &__cta {
+      font-size: 0.9rem;
+      height: 45px;
+    }
+    &__find {
+      padding-left: 2ch;
+      padding-right: 1ch;
+      width: calc(100% - 95px);
+    }
+    &__cta_btn {
+      width: 90px;
+      height: 35px;
+      font-size: 0.9em;
+    }
+
+    &__title {
+      font-size: 42px;
+    }
+
+    &__description--top {
+      font-size: 11px;
+    }
+
+    &__nav {
+      padding: 0 16px;
+    }
+
+    &__nav_link {
+      height: unset;
+      font-size: 1.2rem;
+
+      &::before,
+      &::after {
+        top: -9px;
+        left: 6px;
+        @include size(100px, 40px);
+      }
+    }
+
+    &__description--sub {
+      height: 12px;
+      font-size: 12px;
+    }
+
+    &__more {
+      height: 80px;
+    }
+
+    &__icons {
+      height: 45px;
+      margin-left: -15px;
+    }
+
+    &__icon figcaption {
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    &__icon_img {
+      @include size($tog: 25px);
+    }
+    &__cover {
+      @include size(100%, calc(100% + 30px));
+      top: -15px;
+      grid-row: 1 / span 4;
+
+      figcaption {
+        left: 185px;
+        bottom: 25px;
+        font-size: 16px;
+      }
+    }
+    &__cover_img {
+      @include size(345px, 350px);
+      left: 70px;
+      bottom: 55px;
+    }
+
+    &__cover_shape {
+      @include size(200px, 105%);
+      top: -12px;
+      left: 230px;
+
+      &::before {
+        width: 85%;
+        transform: translateX(10px) skewX(355deg);
+      }
+    }
+  }
+}
+
+/* Transition */
+
+@keyframes push-up {
+  from,
+  0% {
+    transform: translateY(150%);
+  }
+
+  to,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes push-down {
+  from,
+  0% {
+    transform: translateY(-150%);
+  }
+
+  to,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from,
+  0% {
+    opacity: 0;
+  }
+  to,
+  100% {
+    opacity: 1;
+  }
+}
+
+.app {
+  &,
+  &__nav_item,
+  &__icon_item {
+    animation: push-up ease both;
+  }
+
+  &__title,
+  &__cover_img,
+  &__cover figcaption {
+    animation: push-down ease both;
+  }
+
+  &__cta,
+  &__logo,
+  &__search {
+    animation: fade-in ease both;
+  }
+
+  & {
+    animation-duration: 2.5s;
+    animation-delay: 0.1s;
+  }
+
+  &__cover_img {
+    animation-duration: 2s;
+    animation-delay: 0.2s;
+  }
+
+  &__cover figcaption {
+    animation-duration: 1.5s;
+    animation-delay: 0.2s;
+  }
+
+  &__title {
+    animation-delay: 1s;
+    animation-duration: 2s;
+  }
+
+  &__heading,
+  &__cover {
+    overflow: hidden;
+  }
+
+  &__icon_item {
+    animation-duration: 1s;
+    $delay: 1;
+    @for $index from 4 to 0 {
+      &:nth-child(#{$index}) {
+        animation-delay: unquote("#{$delay + 0.4}s");
+        $delay: $delay + 0.4;
+      }
+    }
+  }
+
+  &__logo,
+  &__search {
+    animation-delay: 1s;
+    animation-duration: 3s;
+  }
+
+  &__cta {
+    animation-delay: 1.5s;
+    animation-duration: 2s;
+  }
+
+  &__nav_item {
+    animation-duration: 1.5s;
+
+    $delay: 1;
+    @for $index from 1 to 6 {
+      &:nth-child(#{$index}) {
+        animation-delay: unquote("#{$delay + 0.4}s");
+        $delay: $delay + 0.4;
+      }
+    }
+  }
+
+  &__logo {
+    &:hover &_text {
+      &:first-of-type {
+        color: color(primary);
+      }
+
+      &:last-of-type {
+        color: color(black);
+      }
+    }
+  }
+}
